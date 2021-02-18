@@ -11,7 +11,7 @@ EXEC sp_changepublication
   
 EXEC sp_addsubscription
 @publication = 'Infostore_CXP13_Prod_P',
-@subscriber = '889794-CHTR-DBC',
+@subscriber = '',
 @destination_db = 'Infostore_CXP13_Prod_P',
 @sync_type = 'initialize with backup',
 @backupdevicetype ='disk',
@@ -20,11 +20,11 @@ GO
 
 EXEC sp_addpushsubscription_agent
 @publication = 'Infostore_CXP13_Prod_P',
-@subscriber = '889794-CHTR-DBC',
+@subscriber = '',
 @subscriber_db='Infostore_CXP13_Prod_P',
 @subscriber_security_mode = 0,
-@subscriber_login='replman',
-@subscriber_password='2013!R3plM@n'
+@subscriber_login='',
+@subscriber_password=''
 GO
 
 
@@ -33,7 +33,7 @@ GO
 
 EXEC sp_addsubscription
 @publication = 'eWFM_P_WFMCC',
-@subscriber = 'VM0PWEWFMXD0002',
+@subscriber = '',
 @destination_db = 'EWFM',
 @sync_type = 'initialize with backup',
 @backupdevicetype ='disk',
@@ -42,7 +42,7 @@ GO
 
 EXEC sp_addpushsubscription_agent
 @publication = 'eWFM_P_WFMCC',
-@subscriber = 'VM0PWEWFMXD0002',
+@subscriber = '',
 @subscriber_db='EWFM',
 @subscriber_security_mode = 0,
 @subscriber_login='sa',

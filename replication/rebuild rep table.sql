@@ -6,7 +6,7 @@ go
 EXEC sp_dropsubscription 
   @publication = 'P2P-UnifiedJobs', 
   @article = 'SSPXRef',
-  @subscriber = 'TJGSQLT301';
+  @subscriber = '';
 GO
 
 
@@ -26,7 +26,7 @@ go
 EXEC sp_dropsubscription 
   @publication = 'P2P-UnifiedJobs', 
   @article = 'SSPXRef',
-  @subscriber = 'TJGSQLT201';
+  @subscriber = '';
 GO
 
 
