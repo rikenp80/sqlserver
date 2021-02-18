@@ -1,7 +1,10 @@
 
 --USE [master]
 --GO
---ALTER DATABASE [] MODIFY FILE ( NAME = N'', FILEGROWTH = 0)
+--ALTER DATABASE [TotalCV] MODIFY FILE ( NAME = N'TotalCV_Data1', FILEGROWTH = 0)
+--ALTER DATABASE [TotalCV] MODIFY FILE ( NAME = N'TotalCV_Data2', FILEGROWTH = 0)
+--ALTER DATABASE [TotalCV] MODIFY FILE ( NAME = N'TotalCV_Data3', FILEGROWTH = 0)
+--ALTER DATABASE [TotalCV] MODIFY FILE ( NAME = N'TotalCV_Data4', FILEGROWTH = 0)
 --GO
 
 
@@ -18,8 +21,8 @@ USE [master]
 GO
 ALTER DATABASE [unifiedjobs]
 ADD FILE	(	
-			NAME = '',
-			FILENAME = '',
+			NAME = 'ActiveCandidate1',
+			FILENAME = 'Q:\MSSQL\MSSQL.MSSQLSERVER.Data\unifiedjobs\ActiveCandidate1.ndf',
 			SIZE = 4GB,
 			FILEGROWTH = 100MB
 			)
@@ -29,9 +32,9 @@ GO
 
 USE unifiedjobs
 GO
-DBCC SHRINKFILE (, emptyfile)
+DBCC SHRINKFILE (ActiveCandidate, emptyfile)
 GO
-alter database []] remove file []]
+alter database unifiedjobs remove file ActiveCandidate
 
 
 USE unifiedjobs
