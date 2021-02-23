@@ -1,0 +1,9 @@
+DECLARE @StartTime TIME
+DECLARE @EndTime TIME
+
+SET @StartTime = GETDATE()
+
+WAITFOR DELAY '00:00:02'
+
+SET @EndTime = GETDATE()
+SELECT CAST(DATEDIFF(ms, @StartTime, @EndTime) AS VARCHAR(20)) + ' ms'
