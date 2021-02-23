@@ -1,12 +1,14 @@
 SELECT xp.[name], xo.*
 FROM sys.dm_xe_objects xo, sys.dm_xe_packages xp
-WHERE xp.[guid] = xo.[package_guid] AND xo.[object_type] = 'event'
+WHERE xp.[guid] = xo.[package_guid] 
+	AND xo.[object_type] = 'event' 
+	and xo.description like '%sql%'
 ORDER BY xp.[name], xo.[name]
 
 
 select *
 from sys.dm_xe_object_columns
-where [object_name] = 'lock_deadlock'
+where [object_name] = 'rpc_completed'
 
 
 SELECT xp.[name], xo.*
