@@ -5,8 +5,11 @@ SELECT
 	last_execution_time,
 	execution_count,
 
-	CASE WHEN DATEDIFF(second, cached_time, GETDATE()) < 1 THEN 0 ELSE
+	CASE WHEN DATEDIFF(second, cached_time, GETDATE()) < 1 THEN cast(execution_count as decimal) ELSE
 	cast(execution_count as decimal) / cast(DATEDIFF(second, cached_time, GETDATE()) as decimal) END ExecPerSecond,
+
+	CASE WHEN DATEDIFF(hour, cached_time, GETDATE()) < 1 THEN cast(execution_count as decimal) ELSE
+	cast(execution_count as decimal) / cast(DATEDIFF(hour, cached_time, GETDATE()) as decimal) END ExecPerHour,
 
 
 	(total_elapsed_time/execution_count)/1000000 'avg_elapsed_time_secs',
@@ -29,4 +32,5 @@ SELECT
 	plan_handle
 
 FROM sys.dm_exec_procedure_stats s 
+where OBJECT_NAME(object_id) like 'pMrClean%' or OBJECT_NAME(object_id) = 'deleteProcessedMeteringData'
 ORDER BY last_elapsed_time desc
