@@ -1,0 +1,5 @@
+	SELECT EVENTDATA().value('(/EVENT_INSTANCE/EventType)[1]', 'nvarchar(MAX)')
+	SELECT EVENTDATA().value('(/EVENT_INSTANCE/ObjectName)[1]', 'nvarchar(MAX)')
+	SELECT EVENTDATA().value('(/EVENT_INSTANCE/ObjectType)[1]', 'nvarchar(MAX)')
+	SELECT EVENTDATA().value('(/EVENT_INSTANCE/TSQLCommand)[1]', 'nvarchar(MAX)')
+	SELECT EVENTDATA().value('(/EVENT_INSTANCE/DatabaseName)[1]', 'nvarchar(MAX)')
