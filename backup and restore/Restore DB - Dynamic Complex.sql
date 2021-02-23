@@ -37,7 +37,7 @@ SELECT	LogicalName,
 FROM @FileList
 
 
-RESTORE DATABASE []
+RESTORE DATABASE 
 FROM DISK = @BackupFilePath
 WITH RECOVERY, REPLACE, STATS = 1,
 MOVE '' TO 'D:\sqldata\.mdf',
