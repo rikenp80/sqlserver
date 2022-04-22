@@ -1,0 +1,3 @@
+select @@servername
+select * from sys.dm_hadr_availability_replica_cluster_nodes
+SELECT * FROM fn_virtualservernodes() 
