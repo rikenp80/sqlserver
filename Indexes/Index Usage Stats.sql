@@ -36,12 +36,8 @@ FROM sys.dm_db_index_operational_stats(DB_ID(), NULL, NULL, NULL) s
 	INNER JOIN sys.dm_db_partition_stats AS p on p.[object_id] = i.[object_id] AND p.[index_id] = i.[index_id]
 WHERE t.is_ms_shipped = 0
 and s.page_io_latch_wait_count > 100
---and t.name = ''
+and t.name = @table
 order by s.page_io_latch_wait_in_ms desc
-
-
-
-
 
 
 
@@ -58,5 +54,5 @@ FROM sys.dm_db_index_usage_stats s
 WHERE t.is_ms_shipped = 0
 	and s.database_id = DB_ID()
 	--and user_lookups+user_scans+user_seeks = 0
---		and t.name = @table
+	and t.name = @table
 order by s.user_seeks desc

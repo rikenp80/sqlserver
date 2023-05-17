@@ -5,3 +5,4 @@ where i.rowcnt <> 0
 --and t.name = ''
 group by s.name, t.NAME, i.rowcnt
 order by i.rowcnt desc
+

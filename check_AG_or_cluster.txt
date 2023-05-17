@@ -1,3 +1,4 @@
 select @@servername
 select * from sys.dm_hadr_availability_replica_cluster_nodes
+select * from sys.availability_group_listeners
 SELECT * FROM fn_virtualservernodes() 

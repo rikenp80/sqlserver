@@ -1,22 +1,22 @@
+
 SET QUOTED_IDENTIFIER OFF
 GO
 
 declare @db_id int = 1
 declare @max_db_id int
 declare @db_name varchar(200)
-declare @drive_letter char(1) = 'D'
+declare @drive_letter char(1) = 'S'
 declare @query varchar(2000)
 
 declare @data table
 (
 	DBName varchar(200),
-	CurrentSizeGB decimal(9,2),
-	FreeSpaceGB decimal(9,2),
-	SpaceUsedGB decimal(9,2),
+	CurrentSizeMB decimal(9,2),
+	FreeSpaceMB decimal(9,2),
+	SpaceUsedMB decimal(9,2),
 	type_desc varchar(50),
 	name varchar(500),
 	physical_name varchar(500),
-	[filegroup] varchar(500),
 	growth_mb decimal (18,2),
 	shrink_script varchar(1000),
 	shrink_script_truncate varchar(1000),
@@ -35,17 +35,20 @@ BEGIN
 	USE [" + @db_name + "]
 
 	SELECT	'" + @db_name + "',
-			d.size/128.0/1024.0 AS CurrentSizeGB,  
-			d.size/128.0/1024.0 - CAST(FILEPROPERTY(d.name, 'SpaceUsed') AS INT)/128.0/1024.0 AS FreeSpaceGB,
-			CAST(FILEPROPERTY(d.name, 'SpaceUsed') AS INT)/128.0/1024.0 AS SpaceUsedGB,
-			d.type_desc,
-			d.name,
-			d.physical_name,
-			f.name 'filegroup'	
-	FROM sys.database_files d LEFT JOIN sys.filegroups f ON d.data_space_id = f.data_space_id
-	WHERE d.physical_name like '" + @drive_letter + "%'
+			size/128.0 AS CurrentSizeMB,  
+			size/128.0 - CAST(FILEPROPERTY(name, 'SpaceUsed') AS INT)/128.0 AS FreeSpaceMB,
+			CAST(FILEPROPERTY(name, 'SpaceUsed') AS INT)/128.0 AS SpaceUsedMB,
+			type_desc,
+			name,
+			physical_name,
+			growth/128 'growth_mb',
+			'use [" + @db_name + "] dbcc shrinkfile ('''+name+''', 1)',
+			'use [" + @db_name + "] dbcc shrinkfile ('''+name+''', TRUNCATEONLY)',	
+			'ALTER DATABASE [" + @db_name + "] MODIFY FILE ( NAME = '''+ name +''', FILEGROWTH = 5GB, MAXSIZE = UNLIMITED)'		
+	FROM sys.database_files
+	--WHERE physical_name like '" + @drive_letter + "%'
 	"
-	--print @query
+	print @query
 	
 	INSERT INTO @data
 	EXEC (@query)
@@ -54,5 +57,7 @@ BEGIN
 END
 
 
-select distinct *, left(physical_name,1) from @data
-
+select distinct cast((FreeSpaceMB/CurrentSizeMB)*100 as decimal(9,2)) '%Free', *
+from @data
+--where FreeSpaceMB > 200
+order by DBName 
